@@ -61,7 +61,7 @@ The has bank account column was selected as the target/label (i.e. y) for the mo
       
 The features for the model (i.e. X) are all the columns excluding of the uniqueid, has_bank_account, year, and country columns.
 
-            X = fin.drop(['uniqueid', 'year', 'has_bank_account'], 1)
+            X = fin.drop(['has_bank_account'], 1)
             y = fin['has_bank_account']
 
 categorical columns in the features were converted to numerical values using get_dummies()
@@ -73,16 +73,18 @@ For normalization, standard scaler was used
             from sklearn.preprocessing import StandardScaler
 
             sc = StandardScaler()
-            X_train = sc.fit_transform(X_train)
-            X_test = sc.transform(X_test)
+            Xc_train = sc.fit_transform(Xc_train)
+            Xc_test = sc.transform(Xc_test)
 
-PCA was used for dimensionality reduction.
+PCA(Prinicpal Component Analysis) was used for dimensionality reduction.
 
             from sklearn.decomposition import PCA
 
-            pca = PCA(n_components=31)
-            X_train = pca.fit_transform(X_train)
-            X_test = pca.transform(X_test)
+            pca = PCA(n_components=24)
+            Xc_train = pca.fit_transform(Xc_train)
+            Xc_test = pca.transform(Xc_test)
+            
+24 prinicpal components were chosen as they produced the highest accuracy
 
 The model chosen for this project was the random forest classifier
 
@@ -106,6 +108,8 @@ Entailed determining the accuracy score of the model. Confusion matrix and accur
             print(cmatrix)
             print('Accuracy is: {}' .format(accuracy_score(y_test, pred_y)))
             print('\nPercentage Accuracy with PCA is: {}%' .format(accuracy_score(y_test, pred_y) * 100))
+
+LDA(Linear Discriminant Analysis) was also used for dimension reduction to see if it would result in better accuracy than PCA
 
 ### Conclusion
 
