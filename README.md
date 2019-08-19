@@ -111,6 +111,29 @@ Entailed determining the accuracy score of the model. Confusion matrix and accur
 
 LDA(Linear Discriminant Analysis) was also used for dimension reduction to see if it would result in better accuracy than PCA
 
+            lda = LDA()
+            Xc_train = lda.fit_transform(Xc_train, yc_train)
+            Xc_test = lda.transform(Xc_test)
+            
+Using the random forest classifier to evaluate the performance of a LDA-reduced algorithm as shown
+
+            rf_classifier = RandomForestClassifier(max_depth=2, random_state=10)
+            rf_classifier.fit(Xc_train, yc_train)
+
+            # making predictions with model 
+
+            y_pred = rf_classifier.predict(Xc_test)
+            
+Evaluating performance of model using while lda for dimensionality reduction
+
+            conMat = confusion_matrix(yc_test, y_pred)
+            print(conMat)
+            print('Accuracy: ' + str(accuracy_score(yc_test, y_pred)))
+            print('Percentage Accuracy with PCA is: {}%' .format(accuracy_score(yc_test, y_pred) * 100))
+
+LDA exhibits slightly improved accuracy than pca, accuracy with lda is 88.28%
+
+
 ### Conclusion
 
 Using random Forest as the machine learning model and PCA for dimeanisonality reduction, we can correctly predict individuals with or without bank accounts with an accuracy of 86.4%.
